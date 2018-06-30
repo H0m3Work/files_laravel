@@ -96,8 +96,8 @@
                 <form action="/process" enctype="multipart/form-data" method="POST">
                     <p>
                         <label for="photo">
-                            <input type="file" name="photo" id="photo">
-                            <!-- <input type="file" name="photos[]" id="photo" multiple> -->
+                            <!-- <input type="file" name="photo" id="photo"> -->
+                            <input type="file" name="photos[]" id="photo" multiple>
                         </label>
                     </p>
                     <button>Upload</button>

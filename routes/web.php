@@ -15,35 +15,40 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route::post('process', function (Request $request) {
+// 	// validate the uploaded file
+// 	$validation = $request->validate([
+// 		'photo' => 'required|file|image|mimes:jpeg,png,gif,webp|max:2048'
+// 	]);
+// 	// get the validated file 
+// 	$file = $validation['photo'];
+// 	// // cache the file
+//  //    $file = $request->file('photo');
+
+//     // generate a new filename. getClientOriginalExtension() for the file extension
+//     $filename = 'profile-photo-' . time() . '.' . $file->getClientOriginalExtension();
+
+//     // save to storage/app/photos as the new $filename
+//     $path = $file->storeAs('photos', $filename);
+
+//     dd($path);
+// });
+
 Route::post('process', function (Request $request) {
 	// validate the uploaded file
 	$validation = $request->validate([
-		'photo' => 'required|file|image|mimes:jpeg,png,gif,webp|max:2048'
+		// for multiple file uploads
+		'photo.*' => 'required|file|image|mimes:jpeg,png,gif,webp|max:2048'
 	]);
-	// get the validated file 
-	$file = $validation['photo'];
-	// // cache the file
- //    $file = $request->file('photo');
+	// get the validated files
+    $photos = $request->file('photos');
+    $paths  = [];
 
-    // generate a new filename. getClientOriginalExtension() for the file extension
-    $filename = 'profile-photo-' . time() . '.' . $file->getClientOriginalExtension();
+    foreach ($photos as $photo) {
+        $extension = $photo->getClientOriginalExtension();
+        $filename  = 'profile-photo-' . time() . '.' . $extension;
+        $paths[]   = $photo->storeAs('photos', $filename, 'local');
+    }
 
-    // save to storage/app/photos as the new $filename
-    $path = $file->storeAs('photos', $filename);
-
-    dd($path);
+    dd($paths);
 });
-
-// Route::post('process', function (Request $request) {
-
-//     $photos = $request->file('photos');
-//     $paths  = [];
-
-//     foreach ($photos as $photo) {
-//         $extension = $photo->getClientOriginalExtension();
-//         $filename  = 'profile-photo-' . time() . '.' . $extension;
-//         $paths[]   = $photo->storeAs('photos', $filename);
-//     }
-
-//     dd($paths);
-// });
