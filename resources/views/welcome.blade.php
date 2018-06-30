@@ -5,7 +5,6 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>File uploads</title>
-    
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
@@ -98,6 +97,7 @@
                     <p>
                         <label for="photo">
                             <input type="file" name="photo" id="photo">
+                            <!-- <input type="file" name="photos[]" id="photo" multiple> -->
                         </label>
                     </p>
                     <button>Upload</button>

@@ -16,8 +16,14 @@ Route::get('/', function () {
 });
 
 Route::post('process', function (Request $request) {
-	// cache the file
-    $file = $request->file('photo');
+	// validate the uploaded file
+	$validation = $request->validate([
+		'photo' => 'required|file|image|mimes:jpeg,png,gif,webp|max:2048'
+	]);
+	// get the validated file 
+	$file = $validation['photo'];
+	// // cache the file
+ //    $file = $request->file('photo');
 
     // generate a new filename. getClientOriginalExtension() for the file extension
     $filename = 'profile-photo-' . time() . '.' . $file->getClientOriginalExtension();
@@ -27,3 +33,17 @@ Route::post('process', function (Request $request) {
 
     dd($path);
 });
+
+// Route::post('process', function (Request $request) {
+
+//     $photos = $request->file('photos');
+//     $paths  = [];
+
+//     foreach ($photos as $photo) {
+//         $extension = $photo->getClientOriginalExtension();
+//         $filename  = 'profile-photo-' . time() . '.' . $extension;
+//         $paths[]   = $photo->storeAs('photos', $filename);
+//     }
+
+//     dd($paths);
+// });
